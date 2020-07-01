@@ -4,10 +4,12 @@ namespace PSDTextTests
 {
     public class PSDTextTests
     {
-        [Fact]
-        public void Test1()
-        {
+        private const string TestFile = "./testFiles/test.psd";
 
+        [Fact]
+        public void ReadXMLFromPSD()
+        {
+            var test = new PSDText.PSDText(TestFile);
         }
     }
 }
