@@ -1,14 +1,12 @@
-﻿namespace PSDText
+﻿using System.Xml.Serialization;
+
+namespace PSDText
 {
     public class TextData
     {
-        public readonly string Name;
-        public string Text;
+        [XmlAttribute]
+        public string Name;
 
-        public TextData(string name, string text)
-        {
-            Name = name;
-            Text = text;
-        }
+        public string Text;
     }
 }

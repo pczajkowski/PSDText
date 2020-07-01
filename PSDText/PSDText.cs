@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace PSDText
 {
@@ -71,7 +72,7 @@ namespace PSDText
                 var name = textNode.SelectSingleNode("./photoshop:LayerName", _ns)?.InnerText;
                 var text = textNode.SelectSingleNode("./photoshop:LayerText", _ns)?.InnerText;
 
-                data.Add(new TextData(name, text));
+                data.Add(new TextData{Name = name, Text = text});
             }
 
             return data;
@@ -85,6 +86,15 @@ namespace PSDText
             _xmlData = Readxmpmeta(path);
             AddXMLNamespaces();
             TextData = GetTextData();
+        }
+
+        public void SaveAsXML(string path)
+        {
+            var serializer = new XmlSerializer(typeof(List<TextData>));
+            using (var sr = new StreamWriter(path))
+            {
+                serializer.Serialize(sr, TextData);
+            }
         }
     }
 }
