@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace PSDText
 {
@@ -91,6 +92,15 @@ namespace PSDText
         public void SaveAsXML(string path)
         {
             var serializer = new XmlSerializer(typeof(List<TextData>));
+            using (var sr = new StreamWriter(path))
+            {
+                serializer.Serialize(sr, TextData);
+            }
+        }
+
+        public void SaveAsJSON(string path)
+        {
+            var serializer = new JsonSerializer();
             using (var sr = new StreamWriter(path))
             {
                 serializer.Serialize(sr, TextData);

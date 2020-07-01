@@ -25,5 +25,17 @@ namespace PSDTextTests
             Assert.True(File.Exists(destination));
             File.Delete(destination);
         }
+
+        [Fact]
+        public void SaveAsJSON()
+        {
+            var test = new PSDText.PSDText(TestFile);
+            Assert.NotEmpty(test.TextData);
+
+            var destination = "./test.json";
+            test.SaveAsJSON(destination);
+            Assert.True(File.Exists(destination));
+            File.Delete(destination);
+        }
     }
 }
