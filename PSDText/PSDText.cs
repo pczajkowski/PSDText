@@ -18,23 +18,20 @@ namespace PSDText
             var sb = new StringBuilder(1000);
             using (var sr = new StreamReader(path))
             {
-                sr.ReadLine(); //skip first line
-                    
-                var line = sr.ReadLine();
-                if (string.IsNullOrWhiteSpace(line))
-                    return string.Empty;
-
-                var read = line.StartsWith("<x:xmpmeta");
-                while (read)
+                var read = false;
+                while (true)
                 {
-                    if (line.StartsWith("</x:xmpmeta>"))
-                        read = false;
-
-                    sb.Append(line);
-
-                    line = sr.ReadLine();
+                    var line = sr.ReadLine();
                     if (string.IsNullOrWhiteSpace(line))
                         return sb.ToString();
+
+                    if (line.StartsWith("<x:xmpmeta"))
+                        read = true;
+
+                    if (read) sb.Append(line);
+
+                    if (line.StartsWith("</x:xmpmeta>"))
+                        break;
                 }
             }
 
