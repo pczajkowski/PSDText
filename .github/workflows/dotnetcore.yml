@@ -16,6 +16,4 @@ jobs:
     - name: Test
       run: dotnet test PSDTextTests/
     - name: Build
-      run: |
-        dotnet clean --configuration Release
-        dotnet build --configuration Release --framework netcoreapp3.1 PSDText/
+      run:  dotnet build --configuration Release --framework netcoreapp3.1 PSDText/
