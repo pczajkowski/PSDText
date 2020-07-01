@@ -71,7 +71,7 @@ namespace PSDText
                 var name = textNode.SelectSingleNode("./photoshop:LayerName", _ns)?.InnerText;
                 var text = textNode.SelectSingleNode("./photoshop:LayerText", _ns)?.InnerText;
 
-                data.Add(new TextData{Name = name, Text = text});
+                data.Add(new TextData(name, text));
             }
 
             return data;
