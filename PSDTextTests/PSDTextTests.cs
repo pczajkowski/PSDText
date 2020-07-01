@@ -10,6 +10,7 @@ namespace PSDTextTests
         public void ReadXMLFromPSD()
         {
             var test = new PSDText.PSDText(TestFile);
+            Assert.NotEmpty(test.TextData);
         }
     }
 }
