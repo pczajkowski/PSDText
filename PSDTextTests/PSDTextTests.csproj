@@ -22,6 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="testFiles\noText.psd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="testFiles\test.psd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
