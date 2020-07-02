@@ -45,7 +45,7 @@ namespace PSDTextTests
             Assert.NotEmpty(test.TextData);
 
             var destination = "./test.json";
-            test.SaveAsJSON(destination);
+            Assert.True(test.SaveAsJSON(destination));
             Assert.True(File.Exists(destination));
             File.Delete(destination);
         }
@@ -57,9 +57,8 @@ namespace PSDTextTests
             Assert.Empty(test.TextData);
 
             var destination = "./test.json";
-            test.SaveAsJSON(destination);
-            Assert.True(File.Exists(destination));
-            File.Delete(destination);
+            Assert.False(test.SaveAsJSON(destination));
+            Assert.False(File.Exists(destination));
         }
     }
 }

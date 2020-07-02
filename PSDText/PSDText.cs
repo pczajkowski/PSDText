@@ -107,13 +107,24 @@ namespace PSDText
             return true;
         }
 
-        public void SaveAsJSON(string path)
+        /// <summary>
+        /// Serializes text layers as JSON.
+        /// </summary>
+        /// <param name="path">Output JSON path.</param>
+        /// <returns>True on successful serialization,
+        /// false if there's nothing to write.</returns>
+        public bool SaveAsJSON(string path)
         {
+            if (!TextData.Any())
+                return false;
+
             var serializer = new JsonSerializer();
             using (var sr = new StreamWriter(path))
             {
                 serializer.Serialize(sr, TextData);
             }
+
+            return true;
         }
     }
 }
