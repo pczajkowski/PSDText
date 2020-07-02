@@ -22,7 +22,7 @@ namespace PSDTextTests
             Assert.NotEmpty(test.TextData);
 
             var destination = "./test.xml";
-            test.SaveAsXML(destination);
+            Assert.True(test.SaveAsXML(destination));
             Assert.True(File.Exists(destination));
             File.Delete(destination);
         }
@@ -33,10 +33,9 @@ namespace PSDTextTests
             var test = new PSDText.PSDText(NoTextPSD);
             Assert.Empty(test.TextData);
 
-            var destination = "./test.xml";
-            test.SaveAsXML(destination);
-            Assert.True(File.Exists(destination));
-            File.Delete(destination);
+            var destination = "./testNoText.xml";
+            Assert.False(test.SaveAsXML(destination));
+            Assert.False(File.Exists(destination));
         }
 
         [Fact]

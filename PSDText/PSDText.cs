@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
@@ -86,13 +87,24 @@ namespace PSDText
             TextData = GetTextData();
         }
 
-        public void SaveAsXML(string path)
+        /// <summary>
+        /// Serializes text layers as XML.
+        /// </summary>
+        /// <param name="path">Output XML path.</param>
+        /// <returns>True on successful serialization,
+        /// false if there's nothing to write.</returns>
+        public bool SaveAsXML(string path)
         {
+            if (!TextData.Any())
+                return false;
+
             var serializer = new XmlSerializer(typeof(List<TextData>));
             using (var sr = new StreamWriter(path))
             {
                 serializer.Serialize(sr, TextData);
             }
+
+            return true;
         }
 
         public void SaveAsJSON(string path)
