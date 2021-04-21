@@ -95,6 +95,8 @@ namespace PSDText
 
             AddXMLNamespaces();
             TextData = GetTextData();
+            if (!TextData.Any())
+                throw new Exception("Nothing was read from XML!");
         }
 
         /// <summary>
@@ -105,9 +107,6 @@ namespace PSDText
         /// false if there's nothing to write.</returns>
         public bool SaveAsXML(string path)
         {
-            if (!TextData.Any())
-                return false;
-
             var serializer = new XmlSerializer(typeof(List<TextData>));
             using (var sr = new StreamWriter(path))
             {
@@ -125,9 +124,6 @@ namespace PSDText
         /// false if there's nothing to write.</returns>
         public bool SaveAsJSON(string path)
         {
-            if (!TextData.Any())
-                return false;
-
             var serializer = new JsonSerializer();
             using (var sr = new StreamWriter(path))
             {

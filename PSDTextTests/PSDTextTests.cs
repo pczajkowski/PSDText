@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Xunit;
 
@@ -28,14 +29,9 @@ namespace PSDTextTests
         }
 
         [Fact]
-        public void SaveAsXMLNoText()
+        public void NoText()
         {
-            var test = new PSDText.PSDText(NoTextPSD);
-            Assert.Empty(test.TextData);
-
-            var destination = "./testNoText.xml";
-            Assert.False(test.SaveAsXML(destination));
-            Assert.False(File.Exists(destination));
+            Assert.Throws<Exception>(() => new PSDText.PSDText(NoTextPSD));
         }
 
         [Fact]
@@ -48,17 +44,6 @@ namespace PSDTextTests
             Assert.True(test.SaveAsJSON(destination));
             Assert.True(File.Exists(destination));
             File.Delete(destination);
-        }
-
-        [Fact]
-        public void SaveAsJSONNoText()
-        {
-            var test = new PSDText.PSDText(NoTextPSD);
-            Assert.Empty(test.TextData);
-
-            var destination = "./test.json";
-            Assert.False(test.SaveAsJSON(destination));
-            Assert.False(File.Exists(destination));
         }
     }
 }
