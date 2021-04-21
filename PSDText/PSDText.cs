@@ -14,6 +14,7 @@ namespace PSDText
         private readonly string _xmlData;
         private readonly XmlNamespaceManager _ns = new XmlNamespaceManager(new NameTable());
         public List<TextData> TextData;
+
         private string Readxmpmeta(string path)
         {
             var sb = new StringBuilder(1000);
@@ -49,7 +50,7 @@ namespace PSDText
         private XmlDocument ReadXML()
         {
             var xml = new XmlDocument();
-            
+
             using (var sr = new StringReader(_xmlData))
             using (var reader = XmlReader.Create(sr))
             {
@@ -59,11 +60,11 @@ namespace PSDText
             return xml;
         }
 
-        public List<TextData> GetTextData()
+        private List<TextData> GetTextData()
         {
             var xml = ReadXML();
             var data = new List<TextData>();
-            
+
             var textNodes =
                 xml.SelectNodes("/x:xmpmeta/rdf:RDF/rdf:Description/photoshop:TextLayers/rdf:Bag/rdf:li", _ns);
             foreach (XmlNode textNode in textNodes)
@@ -71,7 +72,7 @@ namespace PSDText
                 var name = textNode.SelectSingleNode("./photoshop:LayerName", _ns)?.InnerText;
                 var text = textNode.SelectSingleNode("./photoshop:LayerText", _ns)?.InnerText;
 
-                data.Add(new TextData{Name = name, Text = text});
+                data.Add(new TextData { Name = name, Text = text });
             }
 
             return data;
