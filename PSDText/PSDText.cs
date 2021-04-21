@@ -81,7 +81,7 @@ namespace PSDText
         public PSDText(string path)
         {
             if (!File.Exists(path))
-                throw new Exception($"File {path} doesn't exist!");
+                throw new FileNotFoundException($"File {path} doesn't exist!");
 
             _xmlData = Readxmpmeta(path);
             AddXMLNamespaces();
