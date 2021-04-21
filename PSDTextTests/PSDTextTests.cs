@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using Xunit;
 
@@ -20,10 +20,9 @@ namespace PSDTextTests
         public void SaveAsXML()
         {
             var test = new PSDText.PSDText(TestFile);
-            Assert.NotEmpty(test.TextData);
 
             var destination = "./test.xml";
-            Assert.True(test.SaveAsXML(destination));
+            test.SaveAsXML(destination);
             Assert.True(File.Exists(destination));
             File.Delete(destination);
         }

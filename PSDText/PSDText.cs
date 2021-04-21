@@ -103,17 +103,13 @@ namespace PSDText
         /// Serializes text layers as XML.
         /// </summary>
         /// <param name="path">Output XML path.</param>
-        /// <returns>True on successful serialization,
-        /// false if there's nothing to write.</returns>
-        public bool SaveAsXML(string path)
+        public void SaveAsXML(string path)
         {
             var serializer = new XmlSerializer(typeof(List<TextData>));
             using (var sr = new StreamWriter(path))
             {
                 serializer.Serialize(sr, TextData);
             }
-
-            return true;
         }
 
         /// <summary>
