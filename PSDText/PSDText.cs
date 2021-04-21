@@ -84,6 +84,9 @@ namespace PSDText
                 throw new FileNotFoundException($"File {path} doesn't exist!");
 
             _xmlData = Readxmpmeta(path);
+            if (string.IsNullOrWhiteSpace(_xmlData))
+                throw new Exception("No data was read!");
+
             AddXMLNamespaces();
             TextData = GetTextData();
         }
