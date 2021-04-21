@@ -37,10 +37,9 @@ namespace PSDTextTests
         public void SaveAsJSON()
         {
             var test = new PSDText.PSDText(TestFile);
-            Assert.NotEmpty(test.TextData);
 
             var destination = "./test.json";
-            Assert.True(test.SaveAsJSON(destination));
+            test.SaveAsJSON(destination);
             Assert.True(File.Exists(destination));
             File.Delete(destination);
         }
