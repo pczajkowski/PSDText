@@ -67,10 +67,16 @@ namespace PSDText
 
             var textNodes =
                 xml.SelectNodes("/x:xmpmeta/rdf:RDF/rdf:Description/photoshop:TextLayers/rdf:Bag/rdf:li", _ns);
+
             foreach (XmlNode textNode in textNodes)
             {
                 var name = textNode.SelectSingleNode("./photoshop:LayerName", _ns)?.InnerText;
+                if (string.IsNullOrWhiteSpace(name))
+                    continue;
+
                 var text = textNode.SelectSingleNode("./photoshop:LayerText", _ns)?.InnerText;
+                if (string.IsNullOrWhiteSpace(text))
+                    continue;
 
                 data.Add(new TextData { Name = name, Text = text });
             }
