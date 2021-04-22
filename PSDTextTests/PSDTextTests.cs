@@ -28,6 +28,13 @@ namespace PSDTextTests
         }
 
         [Fact]
+        public void SaveAsXMLWrongPath()
+        {
+            var test = new PSDText.PSDText(TestFile);
+            Assert.Throws<ArgumentNullException>(() => test.SaveAsXML(null));
+        }
+
+        [Fact]
         public void NoText()
         {
             Assert.Throws<Exception>(() => new PSDText.PSDText(NoTextPSD));
@@ -42,6 +49,13 @@ namespace PSDTextTests
             test.SaveAsJSON(destination);
             Assert.True(File.Exists(destination));
             File.Delete(destination);
+        }
+
+        [Fact]
+        public void SaveAsJSONWrongPath()
+        {
+            var test = new PSDText.PSDText(TestFile);
+            Assert.Throws<ArgumentNullException>(() => test.SaveAsJSON(null));
         }
     }
 }
