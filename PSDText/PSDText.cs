@@ -99,17 +99,23 @@ namespace PSDText
                 throw new Exception("Nothing was read from XML!");
         }
 
+        private void Serialize(string path, ISerializer serializer)
+        {
+            using (var sr = new StreamWriter(path))
+            {
+                serializer.Serialize(sr, TextData);
+            }
+        }
+
         /// <summary>
         /// Serializes text layers as XML.
         /// </summary>
         /// <param name="path">Output XML path.</param>
         public void SaveAsXML(string path)
         {
-            var serializer = new XmlSerializer(typeof(List<TextData>));
-            using (var sr = new StreamWriter(path))
-            {
-                serializer.Serialize(sr, TextData);
-            }
+            var xmlSerializer = new XmlSerializer(typeof(List<TextData>));
+            var serializer = new MyXmlSerializer(xmlSerializer);
+            Serialize(path, serializer);
         }
 
         /// <summary>
@@ -118,11 +124,9 @@ namespace PSDText
         /// <param name="path">Output JSON path.</param>
         public void SaveAsJSON(string path)
         {
-            var serializer = new JsonSerializer();
-            using (var sr = new StreamWriter(path))
-            {
-                serializer.Serialize(sr, TextData);
-            }
+            var jsonSerializer = new JsonSerializer();
+            var serializer = new MyJsonSerializer(jsonSerializer);
+            Serialize(path, serializer);
         }
     }
 }
