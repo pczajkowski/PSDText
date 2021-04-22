@@ -113,6 +113,9 @@ namespace PSDText
         /// <param name="path">Output XML path.</param>
         public void SaveAsXML(string path)
         {
+            if (string.IsNullOrWhiteSpace(path))
+                throw new ArgumentNullException($"Wrong path: {path}");
+
             var xmlSerializer = new XmlSerializer(typeof(List<TextData>));
             var serializer = new MyXmlSerializer(xmlSerializer);
             Serialize(path, serializer);
@@ -124,6 +127,9 @@ namespace PSDText
         /// <param name="path">Output JSON path.</param>
         public void SaveAsJSON(string path)
         {
+            if (string.IsNullOrWhiteSpace(path))
+                throw new ArgumentNullException($"Wrong path: {path}");
+
             var jsonSerializer = new JsonSerializer();
             var serializer = new MyJsonSerializer(jsonSerializer);
             Serialize(path, serializer);
