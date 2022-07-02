@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Xml;
 using System.Xml.Serialization;
-using Newtonsoft.Json;
 
 namespace PSDText
 {
     public class PSDText
     {
         private readonly string _xmlData;
-        private readonly XmlNamespaceManager _ns = new XmlNamespaceManager(new NameTable());
-        public List<TextData> TextData;
+        private readonly XmlNamespaceManager _ns = new(new NameTable());
+        public List<TextData> ExtractedStrings;
 
-        private string Readxmpmeta(string path)
+        private static string Readxmpmeta(string path)
         {
             var sb = new StringBuilder(1000);
             using (var sr = new StreamReader(path))
@@ -94,17 +94,9 @@ namespace PSDText
                 throw new Exception("No data was read!");
 
             AddXMLNamespaces();
-            TextData = GetTextData();
-            if (!TextData.Any())
+            ExtractedStrings = GetTextData();
+            if (!ExtractedStrings.Any())
                 throw new Exception("Nothing was read from XML!");
-        }
-
-        private void Serialize(string path, ISerializer serializer)
-        {
-            using (var sr = new StreamWriter(path))
-            {
-                serializer.Serialize(sr, TextData);
-            }
         }
 
         /// <summary>
@@ -114,11 +106,11 @@ namespace PSDText
         public void SaveAsXML(string path)
         {
             if (string.IsNullOrWhiteSpace(path))
-                throw new ArgumentNullException($"Wrong path: {path}");
+                throw new ArgumentNullException(nameof(path));
 
             var xmlSerializer = new XmlSerializer(typeof(List<TextData>));
-            var serializer = new MyXmlSerializer(xmlSerializer);
-            Serialize(path, serializer);
+            using var fs = File.OpenWrite(path);
+            xmlSerializer.Serialize(fs, ExtractedStrings);
         }
 
         /// <summary>
@@ -128,11 +120,10 @@ namespace PSDText
         public void SaveAsJSON(string path)
         {
             if (string.IsNullOrWhiteSpace(path))
-                throw new ArgumentNullException($"Wrong path: {path}");
+                throw new ArgumentNullException(nameof(path));
 
-            var jsonSerializer = new JsonSerializer();
-            var serializer = new MyJsonSerializer(jsonSerializer);
-            Serialize(path, serializer);
+            using var fs = File.OpenWrite(path);
+            JsonSerializer.Serialize(fs, ExtractedStrings, typeof(List<TextData>));
         }
     }
 }
